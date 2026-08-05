@@ -1,19 +1,14 @@
 import { db } from "./firebase-config.js";
 
-
-import {
-doc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
 import {
     collection,
     addDoc,
     onSnapshot,
     orderBy,
     query,
-    serverTimestamp
+    serverTimestamp,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -39,7 +34,6 @@ if(nome){
 
 
 
-
 entrar.addEventListener("click",()=>{
 
 
@@ -54,11 +48,11 @@ entrar.addEventListener("click",()=>{
     nome = nomeInput.value;
 
 
-    localStorage.setItem("nome",nome);
+    localStorage.setItem("nome", nome);
 
 
-    login.style.display="none";
-    chat.style.display="flex";
+    login.style.display = "none";
+    chat.style.display = "flex";
 
 
 });
@@ -67,34 +61,21 @@ entrar.addEventListener("click",()=>{
 
 
 
-// CHAT
-
+// ELEMENTOS DO CHAT
 
 const input = document.getElementById("mensagem");
+
 const botao = document.getElementById("enviar");
+
 const mensagens = document.getElementById("mensagens");
 
 
 
-const salaPrivada = document.getElementById("salaPrivada");
-
-console.log(salaPrivada);
 
 
-const senhaSala = document.getElementById("senhaSala");
+// ENVIAR MENSAGEM
 
-const senhaInput = document.getElementById("senha");
-
-const entrarSala = document.getElementById("entrarSala");
-
-const erroSenha = document.getElementById("erroSenha");
-
-
-
-
-// ENVIAR
-
-botao.addEventListener("click",async()=>{
+botao.addEventListener("click", async()=>{
 
 
     if(input.value.trim()=="") return;
@@ -124,7 +105,7 @@ botao.addEventListener("click",async()=>{
 
 
 
-// RECEBER
+// RECEBER MENSAGENS
 
 
 const q = query(
@@ -144,10 +125,10 @@ onSnapshot(q,(snapshot)=>{
 
 
 
-    snapshot.forEach((doc)=>{
+    snapshot.forEach((documento)=>{
 
 
-        let msg = doc.data();
+        let msg = documento.data();
 
 
 
@@ -169,67 +150,90 @@ onSnapshot(q,(snapshot)=>{
         </div>
 
 
+        `;
 
 
-        salaPrivada.addEventListener("click",()=>{
 
-
-chat.style.display="none";
-
-senhaSala.style.display="block";
+    });
 
 
 });
+
+
+
+
+
+
+
+// SALA PRIVADA
+
+
+const salaPrivada = document.getElementById("salaPrivada");
+
+const senhaSala = document.getElementById("senhaSala");
+
+const senhaInput = document.getElementById("senha");
+
+const entrarSala = document.getElementById("entrarSala");
+
+const erroSenha = document.getElementById("erroSenha");
+
+
+
+
+salaPrivada.addEventListener("click",()=>{
+
+
+    chat.style.display="none";
+
+    senhaSala.style.display="block";
+
+
+});
+
+
 
 
 
 entrarSala.addEventListener("click", async()=>{
 
 
-const sala = await getDoc(
-doc(db,"salas","privada")
-);
+    const sala = await getDoc(
+
+        doc(db,"salas","privada")
+
+    );
 
 
 
-if(sala.exists()){
+    if(sala.exists()){
 
 
-let senhaCorreta = sala.data().senha;
-
-
-
-if(senhaInput.value === senhaCorreta){
-
-
-senhaSala.style.display="none";
-
-chat.style.display="flex";
-
-
-alert("Entrou na sala privada");
-
-
-}else{
-
-
-erroSenha.innerHTML="Senha incorreta";
-
-
-}
-
-
-}
-
-
-});
-
-
-        `;
+        let senhaCorreta = sala.data().senha;
 
 
 
-    });
+        if(senhaInput.value === senhaCorreta){
+
+
+            senhaSala.style.display="none";
+
+            chat.style.display="flex";
+
+
+            alert("Entrou na sala privada");
+
+
+        }else{
+
+
+            erroSenha.innerHTML="Senha incorreta";
+
+
+        }
+
+
+    }
 
 
 });
