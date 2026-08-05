@@ -1,30 +1,107 @@
 import { db } from "./firebase-config.js";
 
+
 import {
+
 collection,
-onSnapshot
+addDoc,
+onSnapshot,
+query,
+orderBy,
+serverTimestamp
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const area = document.getElementById("mensagens");
+
+const input = document.getElementById("mensagem");
+
+const botao = document.getElementById("enviar");
+
+const mensagens = document.getElementById("mensagens");
 
 
-onSnapshot(collection(db,"mensagens"), (snapshot)=>{
 
-    area.innerHTML = "";
-
-    snapshot.forEach((doc)=>{
-
-        let mensagem = doc.data();
+let nome = "Gabriel";
 
 
-        area.innerHTML += `
-        <p>
-        <b>${mensagem.usuario}</b>: 
-        ${mensagem.texto}
-        </p>
-        `;
 
-    });
+// ENVIAR MENSAGEM
+
+botao.addEventListener("click", async ()=>{
+
+
+if(input.value.trim() === ""){
+return;
+}
+
+
+
+await addDoc(collection(db,"mensagens"),{
+
+
+texto: input.value,
+
+usuario: nome,
+
+data: serverTimestamp()
+
+
+});
+
+
+
+input.value = "";
+
+
+});
+
+
+
+
+// RECEBER MENSAGENS
+
+
+const q = query(
+
+collection(db,"mensagens"),
+
+orderBy("data")
+
+);
+
+
+
+onSnapshot(q,(snapshot)=>{
+
+
+mensagens.innerHTML = "";
+
+
+
+snapshot.forEach((doc)=>{
+
+
+let msg = doc.data();
+
+
+
+mensagens.innerHTML += `
+
+<div class="msg">
+
+<b>${msg.usuario}</b>
+
+<br>
+
+${msg.texto}
+
+</div>
+
+`;
+
+
+});
+
 
 });
