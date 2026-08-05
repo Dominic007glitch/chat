@@ -78,6 +78,9 @@ const mensagens = document.getElementById("mensagens");
 
 const salaPrivada = document.getElementById("salaPrivada");
 
+console.log(salaPrivada);
+
+
 const senhaSala = document.getElementById("senhaSala");
 
 const senhaInput = document.getElementById("senha");
