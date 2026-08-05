@@ -36,30 +36,68 @@ Entrar
 
 <aside class="sidebar">
 
-<h2>N sei oq colocar</h2>
+<h2>Salas</h2>
 
-  <button id="salaPrivada">
+<button id="salaPrivada">
 🔒 Sala Privada
 </button>
 
 
-  <div id="senhaSala" style="display:none;">
+</aside>
 
-<h2>Entrar na sala privada</h2>
 
-<input id="senha" placeholder="Digite a senha">
+<main class="chat">
 
-<button id="entrarSala">
-Entrar
+<header>
+
+<h2>Chat Amigos</h2>
+
+<span id="usuario"></span>
+
+</header>
+
+
+<div id="mensagens">
+
+</div>
+
+
+<div class="envio">
+
+<input id="mensagem" placeholder="Digite uma mensagem...">
+
+<button id="enviar">
+Enviar
 </button>
 
 </div>
 
 
+</main>
+
+
+</div>
 
 
 
-</aside>
+<!-- Tela da senha fica FORA do chat -->
+
+<div id="senhaSala" class="login" style="display:none;">
+
+<h2>Entrar na sala privada</h2>
+
+<input id="senha" placeholder="Digite a senha">
+
+
+<button id="entrarSala">
+Entrar
+</button>
+
+
+<p id="erroSenha"></p>
+
+
+</div>
 
 
 
