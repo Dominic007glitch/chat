@@ -14,6 +14,11 @@ serverTimestamp
 
 
 
+const usuario = document.getElementById("usuario");
+const trocarNome = document.getElementById("trocarNome");
+
+
+
 const login = document.getElementById("login");
 
 const chat = document.getElementById("chat");
@@ -34,6 +39,10 @@ if(nome){
 login.style.display = "none";
 
 chat.style.display = "block";
+
+
+usuario.textContent = nome;
+  
 
 }
 
@@ -153,6 +162,14 @@ ${msg.texto}
 </div>
 
 `;
+
+  trocarNome.addEventListener("click",()=>{
+
+localStorage.removeItem("nome");
+
+location.reload();
+
+});
 
 
 });
