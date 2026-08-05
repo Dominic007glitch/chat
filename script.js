@@ -19,6 +19,7 @@ const chat = document.getElementById("chat");
 
 const nomeInput = document.getElementById("nome");
 const entrar = document.getElementById("entrar");
+console.log("Botão entrar:", entrar);
 
 
 let nome = localStorage.getItem("nome");
