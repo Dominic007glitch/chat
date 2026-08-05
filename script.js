@@ -1,3 +1,5 @@
+console.log("SCRIPT CARREGOU");
+
 import { db } from "./firebase-config.js";
 
 import {
