@@ -1,69 +1,30 @@
 import { db } from "./firebase-config.js";
 
 import {
-    collection,
-    addDoc,
-    onSnapshot,
-    orderBy,
-    query,
-    serverTimestamp
+collection,
+onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const input = document.getElementById("mensagem");
-const botao = document.getElementById("enviar");
-const mensagens = document.getElementById("mensagens");
+const area = document.getElementById("mensagens");
 
 
-// enviar mensagem
+onSnapshot(collection(db,"mensagens"), (snapshot)=>{
 
-botao.addEventListener("click", async () => {
-
-    if(input.value.trim() === "") return;
-
-
-    await addDoc(collection(db, "mensagens"), {
-
-        texto: input.value,
-
-        data: serverTimestamp()
-
-    });
-
-
-    input.value = "";
-
-});
-
-
-
-// mostrar mensagens
-
-const q = query(
-    collection(db,"mensagens"),
-    orderBy("data")
-);
-
-
-onSnapshot(q,(snapshot)=>{
-
-    mensagens.innerHTML="";
-
+    area.innerHTML = "";
 
     snapshot.forEach((doc)=>{
 
-        let msg = doc.data();
+        let mensagem = doc.data();
 
 
-        mensagens.innerHTML += `
-
-        <div class="msg">
-            ${msg.texto}
-        </div>
-
+        area.innerHTML += `
+        <p>
+        <b>${mensagem.usuario}</b>: 
+        ${mensagem.texto}
+        </p>
         `;
 
     });
-
 
 });
