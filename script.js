@@ -172,6 +172,8 @@ onSnapshot(q,(snapshot)=>{
 
 
 const salaPrivada = document.getElementById("salaPrivada");
+console.log("Botão sala privada:", salaPrivada);
+
 
 const senhaSala = document.getElementById("senhaSala");
 
@@ -185,7 +187,7 @@ const erroSenha = document.getElementById("erroSenha");
 
 
 salaPrivada.addEventListener("click",()=>{
-
+console.log("Clicou na sala privada");
 
     chat.style.display="none";
 
