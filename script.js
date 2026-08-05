@@ -1,5 +1,12 @@
 import { db } from "./firebase-config.js";
 
+
+import {
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 import {
     collection,
     addDoc,
@@ -66,6 +73,18 @@ entrar.addEventListener("click",()=>{
 const input = document.getElementById("mensagem");
 const botao = document.getElementById("enviar");
 const mensagens = document.getElementById("mensagens");
+
+
+
+const salaPrivada = document.getElementById("salaPrivada");
+
+const senhaSala = document.getElementById("senhaSala");
+
+const senhaInput = document.getElementById("senha");
+
+const entrarSala = document.getElementById("entrarSala");
+
+const erroSenha = document.getElementById("erroSenha");
 
 
 
@@ -145,6 +164,62 @@ onSnapshot(q,(snapshot)=>{
             ${msg.texto}
 
         </div>
+
+
+
+
+        salaPrivada.addEventListener("click",()=>{
+
+
+chat.style.display="none";
+
+senhaSala.style.display="block";
+
+
+});
+
+
+
+entrarSala.addEventListener("click", async()=>{
+
+
+const sala = await getDoc(
+doc(db,"salas","privada")
+);
+
+
+
+if(sala.exists()){
+
+
+let senhaCorreta = sala.data().senha;
+
+
+
+if(senhaInput.value === senhaCorreta){
+
+
+senhaSala.style.display="none";
+
+chat.style.display="flex";
+
+
+alert("Entrou na sala privada");
+
+
+}else{
+
+
+erroSenha.innerHTML="Senha incorreta";
+
+
+}
+
+
+}
+
+
+});
 
 
         `;
