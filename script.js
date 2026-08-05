@@ -208,8 +208,11 @@ entrarSala.addEventListener("click", async()=>{
     const sala = await getDoc(
 
         doc(db,"salas","privada")
+        
 
     );
+
+    console.log("Sala encontrada:", sala.exists());
 
 
 
