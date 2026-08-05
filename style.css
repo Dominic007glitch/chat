@@ -1,63 +1,20 @@
 body{
-
-    background:#202124;
-    font-family:Arial;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-
+font-family: Arial;
+background:#222;
+color:white;
 }
-
 
 .chat{
-
-    background:#fff;
-    width:400px;
-    padding:20px;
-    border-radius:15px;
-
+width:400px;
+margin:50px auto;
+background:#333;
+padding:20px;
+border-radius:10px;
 }
-
 
 #mensagens{
-
-    height:400px;
-    overflow-y:auto;
-    border:1px solid #ddd;
-    padding:10px;
-
-}
-
-
-.msg{
-
-    background:#4285f4;
-    color:white;
-    padding:10px;
-    margin:8px;
-    border-radius:10px;
-
-}
-
-
-.enviar{
-
-    display:flex;
-    margin-top:10px;
-
-}
-
-
-input{
-
-    flex:1;
-    padding:10px;
-
-}
-
-
-button{
-
-    padding:10px;
+background:white;
+color:black;
+padding:10px;
+height:300px;
 }
