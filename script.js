@@ -14,6 +14,64 @@ serverTimestamp
 
 
 
+const login = document.getElementById("login");
+
+const chat = document.getElementById("chat");
+
+const nomeInput = document.getElementById("nome");
+
+const entrar = document.getElementById("entrar");
+
+
+
+let nome = localStorage.getItem("nome");
+
+
+// verifica se já tem nome salvo
+
+if(nome){
+
+login.style.display = "none";
+
+chat.style.display = "block";
+
+}
+
+
+
+// botão entrar
+
+entrar.addEventListener("click",()=>{
+
+
+if(nomeInput.value.trim()==""){
+
+alert("Digite um nome");
+
+return;
+
+}
+
+
+
+nome = nomeInput.value;
+
+
+localStorage.setItem("nome", nome);
+
+
+
+login.style.display="none";
+
+chat.style.display="block";
+
+
+});
+
+
+
+
+
 const input = document.getElementById("mensagem");
 
 const botao = document.getElementById("enviar");
@@ -22,44 +80,40 @@ const mensagens = document.getElementById("mensagens");
 
 
 
-let nome = "Gabriel";
 
-
-
-// ENVIAR MENSAGEM
+// enviar mensagem
 
 botao.addEventListener("click", async ()=>{
 
 
-if(input.value.trim() === ""){
-return;
-}
+if(input.value.trim()=="") return;
 
 
 
 await addDoc(collection(db,"mensagens"),{
 
 
-texto: input.value,
+texto:input.value,
 
-usuario: nome,
+usuario:nome,
 
-data: serverTimestamp()
-
-
-});
-
-
-
-input.value = "";
+data:serverTimestamp()
 
 
 });
 
 
 
+input.value="";
 
-// RECEBER MENSAGENS
+
+});
+
+
+
+
+
+// receber mensagens
 
 
 const q = query(
@@ -75,7 +129,7 @@ orderBy("data")
 onSnapshot(q,(snapshot)=>{
 
 
-mensagens.innerHTML = "";
+mensagens.innerHTML="";
 
 
 
