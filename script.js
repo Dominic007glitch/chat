@@ -1,78 +1,57 @@
 import { db } from "./firebase-config.js";
 
-
 import {
-
-collection,
-addDoc,
-onSnapshot,
-query,
-orderBy,
-serverTimestamp
-
+    collection,
+    addDoc,
+    onSnapshot,
+    orderBy,
+    query,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-
-const usuario = document.getElementById("usuario");
-const trocarNome = document.getElementById("trocarNome");
-
-
+// LOGIN
 
 const login = document.getElementById("login");
-
 const chat = document.getElementById("chat");
 
 const nomeInput = document.getElementById("nome");
-
 const entrar = document.getElementById("entrar");
-
 
 
 let nome = localStorage.getItem("nome");
 
 
-// verifica se já tem nome salvo
 
 if(nome){
 
-login.style.display = "none";
-
-chat.style.display = "block";
-
-
-usuario.textContent = nome;
-  
+    login.style.display = "none";
+    chat.style.display = "flex";
 
 }
 
 
 
-// botão entrar
 
 entrar.addEventListener("click",()=>{
 
 
-if(nomeInput.value.trim()==""){
+    if(nomeInput.value.trim()==""){
 
-alert("Digite um nome");
+        alert("Digite seu nome");
+        return;
 
-return;
-
-}
-
+    }
 
 
-nome = nomeInput.value;
+    nome = nomeInput.value;
 
 
-localStorage.setItem("nome", nome);
+    localStorage.setItem("nome",nome);
 
 
-
-login.style.display="none";
-
-chat.style.display="block";
+    login.style.display="none";
+    chat.style.display="flex";
 
 
 });
@@ -81,55 +60,56 @@ chat.style.display="block";
 
 
 
+// CHAT
+
+
 const input = document.getElementById("mensagem");
-
 const botao = document.getElementById("enviar");
-
 const mensagens = document.getElementById("mensagens");
 
 
 
 
-// enviar mensagem
+// ENVIAR
 
-botao.addEventListener("click", async ()=>{
-
-
-if(input.value.trim()=="") return;
+botao.addEventListener("click",async()=>{
 
 
+    if(input.value.trim()=="") return;
 
-await addDoc(collection(db,"mensagens"),{
 
 
-texto:input.value,
+    await addDoc(collection(db,"mensagens"),{
 
-usuario:nome,
 
-data:serverTimestamp()
+        texto: input.value,
+
+        usuario: nome,
+
+        data: serverTimestamp()
+
+
+    });
+
+
+
+    input.value="";
 
 
 });
 
 
 
-input.value="";
 
 
-});
-
-
-
-
-
-// receber mensagens
+// RECEBER
 
 
 const q = query(
 
-collection(db,"mensagens"),
+    collection(db,"mensagens"),
 
-orderBy("data")
+    orderBy("data")
 
 );
 
@@ -138,41 +118,40 @@ orderBy("data")
 onSnapshot(q,(snapshot)=>{
 
 
-mensagens.innerHTML="";
+    mensagens.innerHTML="";
 
 
 
-snapshot.forEach((doc)=>{
+    snapshot.forEach((doc)=>{
 
 
-let msg = doc.data();
+        let msg = doc.data();
 
 
 
-mensagens.innerHTML += `
-
-<div class="msg">
-
-<b>${msg.usuario}</b>
-
-<br>
-
-${msg.texto}
-
-</div>
-
-`;
-
-  trocarNome.addEventListener("click",()=>{
-
-localStorage.removeItem("nome");
-
-location.reload();
-
-});
+        let classe = msg.usuario === nome ? "minha-msg" : "msg";
 
 
-});
+
+        mensagens.innerHTML += `
+
+
+        <div class="${classe}">
+
+            <b>${msg.usuario}</b>
+
+            <br>
+
+            ${msg.texto}
+
+        </div>
+
+
+        `;
+
+
+
+    });
 
 
 });
