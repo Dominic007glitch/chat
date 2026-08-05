@@ -16,11 +16,13 @@
 <body>
 
 
+<!-- LOGIN -->
+
 <div id="login" class="login">
 
 <h2>Entrar no Chat</h2>
 
-<input id="nome" placeholder="Seu nome"> 
+<input id="nome" placeholder="Seu nome">
 
 <button id="entrar">
 Entrar
@@ -30,6 +32,7 @@ Entrar
 
 
 
+<!-- CHAT PRINCIPAL -->
 
 <div class="app" id="chat" style="display:none;">
 
@@ -37,6 +40,7 @@ Entrar
 <aside class="sidebar">
 
 <h2>Salas</h2>
+
 
 <button id="salaPrivada">
 🔒 Sala Privada
@@ -46,61 +50,6 @@ Entrar
 </aside>
 
 
-<main class="chat">
-
-<header>
-
-<h2>Chat Amigos</h2>
-
-<span id="usuario"></span>
-
-</header>
-
-
-<div id="mensagens">
-
-</div>
-
-
-<div class="envio">
-
-<input id="mensagem" placeholder="Digite uma mensagem...">
-
-<button id="enviar">
-Enviar
-</button>
-
-</div>
-
-
-</main>
-
-
-</div>
-
-
-
-<!-- Tela da senha fica FORA do chat -->
-
-<div id="senhaSala" class="login" style="display:none;">
-
-<h2>Entrar na sala privada</h2>
-
-<input id="senha" placeholder="Digite a senha">
-
-
-<button id="entrarSala">
-Entrar
-</button>
-
-
-<p id="erroSenha"></p>
-
-
-</div>
-
-
-
 
 <main class="chat">
 
@@ -124,6 +73,7 @@ Entrar
 
 
 <div class="envio">
+
 
 <input 
 id="mensagem"
@@ -146,18 +96,29 @@ Enviar
 
 
 
-  
+
+
+<!-- LOGIN DA SALA PRIVADA -->
+
 <div id="senhaSala" class="login" style="display:none;">
+
 
 <h2>Entrar na Sala Privada</h2>
 
-<input id="senha" placeholder="Digite a senha">
+
+<input 
+id="senha" 
+placeholder="Digite a senha"
+>
+
 
 <button id="entrarSala">
 Entrar
 </button>
 
+
 <p id="erroSenha"></p>
+
 
 </div>
 
