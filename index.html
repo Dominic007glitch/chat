@@ -16,11 +16,9 @@
 <body>
 
 
-<!-- Tela para escolher nome -->
+<div id="login" class="login">
 
-<div id="login">
-
-<h2>Digite seu nome</h2>
+<h2>Entrar no Chat</h2>
 
 <input id="nome" placeholder="Seu nome">
 
@@ -32,24 +30,45 @@ Entrar
 
 
 
-<!-- Chat -->
 
-<div class="chat" id="chat" style="display:none;">
+<div class="app" id="chat" style="display:none;">
 
 
-<div class="topo">
+<aside class="sidebar">
 
-<h1>Chat Amigos</h1>
+<h2>Amigos</h2>
 
-<p>
-Usuário: <span id="usuario"></span>
-</p>
 
-<button id="trocarNome">
-Trocar nome
-</button>
-
+<div class="usuario">
+Gabriel
 </div>
+
+<div class="usuario">
+João
+</div>
+
+<div class="usuario">
+Pedro
+</div>
+
+
+</aside>
+
+
+
+
+<main class="chat">
+
+
+<header>
+
+<h2>Chat Amigos</h2>
+
+<span id="usuario"></span>
+
+</header>
+
+
 
 
 <div id="mensagens">
@@ -58,11 +77,12 @@ Trocar nome
 
 
 
-<div class="area-envio">
+
+<div class="envio">
 
 <input 
-id="mensagem" 
-placeholder="Digite sua mensagem..."
+id="mensagem"
+placeholder="Digite uma mensagem..."
 >
 
 
@@ -72,6 +92,9 @@ Enviar
 
 
 </div>
+
+
+</main>
 
 
 </div>
