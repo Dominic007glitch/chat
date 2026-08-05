@@ -198,6 +198,8 @@ salaPrivada.addEventListener("click",()=>{
 
 entrarSala.addEventListener("click", async()=>{
 
+    console.log("Clicou para entrar na sala privada");
+    
 
     const sala = await getDoc(
 
