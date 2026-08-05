@@ -338,3 +338,33 @@ header h2{
     border-radius:10px;
 
 }
+
+#salaPrivada{
+
+width:100%;
+
+margin-top:20px;
+
+background:#202023;
+
+color:white;
+
+border:1px solid #333;
+
+}
+
+
+#salaPrivada:hover{
+
+background:#2b2b30;
+
+}
+
+
+#erroSenha{
+
+color:#ff5555;
+
+margin-top:10px;
+
+}
