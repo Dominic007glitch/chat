@@ -455,6 +455,9 @@ async function verificarAdmin(){
 
     const usuarioDoc = await getDoc(usuarioRef);
 
+    console.log("Procurando usuário:", nome.toLowerCase());
+console.log("Existe no Firebase:", usuarioDoc.exists());
+
 
 
     if(usuarioDoc.exists()){
