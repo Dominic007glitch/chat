@@ -87,19 +87,14 @@ botao.addEventListener("click", async()=>{
 
 
 
-    await addDoc(collection(db,"mensagens"),await addDoc(
+    await addDoc(
     collection(db, "salas", salaAtual, "mensagens"),
-{
-
-
+    {
         texto: input.value,
-
         usuario: nome,
-
         data: serverTimestamp()
-
-
-    });
+    }
+);
 
 
 
