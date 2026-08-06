@@ -3,132 +3,152 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Chat Amigos</title>
+    <title>Chat Amigos</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
-
 <body>
 
+    <!-- LOGIN -->
 
-<!-- LOGIN -->
+    <div id="login" class="login">
 
-<div id="login" class="login">
+        <div class="login-box">
 
-<h2>Entrar no Chat</h2>
+            <h1>💬 Chat Amigos</h1>
 
-<input id="nome" placeholder="Seu nome">
+            <p>Entre para conversar.</p>
 
-<button id="entrar">
-Entrar
-</button>
+            <input
+                id="nome"
+                type="text"
+                placeholder="Seu nome">
 
-</div>
+            <button id="entrar">
+                Entrar
+            </button>
 
+        </div>
 
+    </div>
 
-<!-- CHAT PRINCIPAL -->
 
-<div class="app" id="chat" style="display:none;">
 
+    <!-- CHAT -->
 
-<aside class="sidebar">
+    <div id="chat" class="app" style="display:none;">
 
-<h2>Salas</h2>
+        <!-- MENU LATERAL -->
 
+        <aside class="sidebar">
 
-<button id="salaPrivada">
-🔒 Sala Privada
-</button>
+            <h2>💬 Chat Amigos</h2>
 
+            <div class="lista-salas">
 
-</aside>
+                <button class="sala ativa" data-sala="geral">
+                    📚 Sala Geral
+                </button>
 
+                <button class="sala" data-sala="privada" id="salaPrivada">
+                    🔒 Sala Privada
+                </button>
 
+            </div>
 
-<main class="chat">
+            <div class="sidebar-footer">
 
+                <button id="criarSala">
+                    ➕ Criar Sala
+                </button>
 
-<header>
+            </div>
 
-<h2>Chat Amigos</h2>
+        </aside>
 
-<span id="usuario"></span>
 
-</header>
 
+        <!-- CHAT -->
 
+        <main class="chat">
 
+            <header class="topo-chat">
 
-<div id="mensagens">
+                <div>
 
-</div>
+                    <h2 id="tituloSala">
+                        📚 Sala Geral
+                    </h2>
 
+                    <small id="usuario"></small>
 
+                </div>
 
+            </header>
 
-<div class="envio">
 
 
-<input 
-id="mensagem"
-placeholder="Digite uma mensagem..."
->
+            <div id="mensagens"></div>
 
 
-<button id="enviar">
-Enviar
-</button>
 
+            <div class="envio">
 
-</div>
+                <input
+                    id="mensagem"
+                    placeholder="Digite uma mensagem...">
 
+                <button id="enviar">
 
-</main>
+                    Enviar
 
+                </button>
 
-</div>
+            </div>
 
+        </main>
 
+    </div>
 
 
 
-<!-- LOGIN DA SALA PRIVADA -->
 
-<div id="senhaSala" class="login" style="display:none;">
 
+    <!-- SENHA DA SALA PRIVADA -->
 
-<h2>Entrar na Sala Privada</h2>
+    <div id="senhaSala" class="login" style="display:none;">
 
+        <div class="login-box">
 
-<input 
-id="senha" 
-placeholder="Digite a senha"
->
+            <h2>🔒 Sala Privada</h2>
 
+            <p>Digite a senha da sala.</p>
 
-<button id="entrarSala">
-Entrar
-</button>
+            <input
+                id="senha"
+                type="password"
+                placeholder="Senha">
 
+            <button id="entrarSala">
 
-<p id="erroSenha"></p>
+                Entrar
 
+            </button>
 
-</div>
+            <p id="erroSenha"></p>
 
+        </div>
 
+    </div>
 
 
 
-
-<script type="module" src="script.js"></script>
-
+    <script type="module" src="script.js"></script>
 
 </body>
 
