@@ -12,7 +12,8 @@ import {
     query,
     serverTimestamp,
     doc,
-    getDoc
+    getDoc,
+    setDoc
 } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -26,6 +27,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 let nome = localStorage.getItem("nome");
 
 let salaAtual = "geral";
+
+let ehAdmin = false;
 
 let pararMensagens = null;
 
@@ -113,6 +116,7 @@ entrar.addEventListener("click",()=>{
 
 
     nome = nomeInput.value.trim();
+    verificarAdmin();
 
 
     localStorage.setItem("nome",nome);
@@ -421,12 +425,34 @@ entrarSala.addEventListener("click",async()=>{
             erroSenha.innerHTML =
             "Senha incorreta";
 
+            async function verificarAdmin(){
+
+    const usuarioRef = doc(
+        db,
+        "usuarios",
+        nome.toLowerCase()
+    );
+
+
+    const usuarioDoc = await getDoc(usuarioRef);
+
+
+    if(usuarioDoc.exists()){
+
+
+        const dados = usuarioDoc.data();
+
+
+        if(dados.admin === true){
+
+            ehAdmin = true;
+
+            console.log("Administrador reconhecido");
+
 
         }
 
-
     }
 
+}
 
-
-});
