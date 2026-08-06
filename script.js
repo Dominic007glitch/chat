@@ -1,6 +1,8 @@
-console.log("SCRIPT CARREGOU");
+console.log("Chat Amigos iniciado");
+
 
 import { db } from "./firebase-config.js";
+
 
 import {
     collection,
@@ -11,53 +13,121 @@ import {
     serverTimestamp,
     doc,
     getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// LOGIN
 
-const login = document.getElementById("login");
-const chat = document.getElementById("chat");
-
-const nomeInput = document.getElementById("nome");
-const entrar = document.getElementById("entrar");
-console.log("Botão entrar:", entrar);
+// ===============================
+// VARIÁVEIS
+// ===============================
 
 
 let nome = localStorage.getItem("nome");
 
 let salaAtual = "geral";
 
+let pararMensagens = null;
+
+
+
+// ===============================
+// ELEMENTOS HTML
+// ===============================
+
+
+const login = document.getElementById("login");
+
+const chat = document.getElementById("chat");
+
+
+const nomeInput = document.getElementById("nome");
+
+const entrar = document.getElementById("entrar");
+
+
+const usuario = document.getElementById("usuario");
+
+
+const mensagens = document.getElementById("mensagens");
+
+
+const input = document.getElementById("mensagem");
+
+const enviar = document.getElementById("enviar");
+
+
+const tituloSala = document.getElementById("tituloSala");
+
+
+
+// sala privada
+
+const senhaSala = document.getElementById("senhaSala");
+
+const senhaInput = document.getElementById("senha");
+
+const entrarSala = document.getElementById("entrarSala");
+
+const erroSenha = document.getElementById("erroSenha");
+
+
+
+// salas
+
+const botoesSala = document.querySelectorAll(".sala");
+
+
+
+
+// ===============================
+// LOGIN
+// ===============================
 
 
 if(nome){
 
     login.style.display = "none";
+
     chat.style.display = "flex";
 
+    usuario.innerHTML = nome;
+
+    abrirSala("geral");
+
 }
+
 
 
 
 entrar.addEventListener("click",()=>{
 
 
-    if(nomeInput.value.trim()==""){
+    if(nomeInput.value.trim() === ""){
 
         alert("Digite seu nome");
+
         return;
 
     }
 
 
-    nome = nomeInput.value;
+    nome = nomeInput.value.trim();
 
 
-    localStorage.setItem("nome", nome);
+    localStorage.setItem("nome",nome);
 
 
-    login.style.display = "none";
-    chat.style.display = "flex";
+
+    login.style.display="none";
+
+    chat.style.display="flex";
+
+
+    usuario.innerHTML = nome;
+
+
+    abrirSala("geral");
 
 
 });
@@ -65,36 +135,167 @@ entrar.addEventListener("click",()=>{
 
 
 
-
-// ELEMENTOS DO CHAT
-
-const input = document.getElementById("mensagem");
-
-const botao = document.getElementById("enviar");
-
-const mensagens = document.getElementById("mensagens");
+// ===============================
+// ABRIR SALA
+// ===============================
 
 
+function abrirSala(sala){
+
+
+    salaAtual = sala;
+
+
+    if(tituloSala){
+
+        tituloSala.innerHTML =
+        sala === "geral"
+        ? "📚 Sala Geral"
+        : "🔒 Sala Privada";
+
+    }
 
 
 
+    carregarMensagens();
+
+
+}
+
+
+
+
+
+// ===============================
+// CARREGAR MENSAGENS
+// ===============================
+
+
+function carregarMensagens(){
+
+
+
+    mensagens.innerHTML="";
+
+
+
+    if(pararMensagens){
+
+        pararMensagens();
+
+    }
+
+
+
+    const q = query(
+
+        collection(
+            db,
+            "salas",
+            salaAtual,
+            "mensagens"
+        ),
+
+        orderBy("data")
+
+    );
+
+
+
+
+    pararMensagens = onSnapshot(q,(snapshot)=>{
+
+
+        mensagens.innerHTML="";
+
+
+
+        snapshot.forEach((documento)=>{
+
+
+            const msg = documento.data();
+
+
+
+            const div = document.createElement("div");
+
+
+
+            div.className =
+            msg.usuario === nome
+            ? "minha-msg"
+            : "msg";
+
+
+
+            div.innerHTML = `
+
+                <b>${msg.usuario}</b>
+
+                <br>
+
+                ${msg.texto}
+
+            `;
+
+
+
+            mensagens.appendChild(div);
+
+
+
+        });
+
+
+
+        mensagens.scrollTop =
+        mensagens.scrollHeight;
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+// ===============================
 // ENVIAR MENSAGEM
+// ===============================
 
-botao.addEventListener("click", async()=>{
+
+enviar.addEventListener("click", async()=>{
 
 
-    if(input.value.trim()=="") return;
+    if(input.value.trim()==="") return;
 
 
 
     await addDoc(
-    collection(db, "salas", salaAtual, "mensagens"),
-    {
-        texto: input.value,
-        usuario: nome,
-        data: serverTimestamp()
-    }
-);
+
+        collection(
+            db,
+            "salas",
+            salaAtual,
+            "mensagens"
+        ),
+
+        {
+
+            texto: input.value,
+
+            usuario: nome,
+
+            data: serverTimestamp()
+
+        }
+
+    );
 
 
 
@@ -107,91 +308,60 @@ botao.addEventListener("click", async()=>{
 
 
 
-// RECEBER MENSAGENS
+
+input.addEventListener("keypress",(e)=>{
 
 
-const q = query(
+    if(e.key==="Enter"){
 
-    collection(db, "salas", salaAtual, "mensagens"),
+        enviar.click();
 
-    orderBy("data")
-
-);
+    }
 
 
-
-onSnapshot(q,(snapshot)=>{
-
-
-    mensagens.innerHTML="";
+});
 
 
 
-    snapshot.forEach((documento)=>{
 
 
-        let msg = documento.data();
+// ===============================
+// TROCAR SALAS
+// ===============================
+
+
+botoesSala.forEach(botao=>{
+
+
+    botao.addEventListener("click",async()=>{
+
+
+        const sala = botao.dataset.sala;
 
 
 
-        let classe = msg.usuario === nome ? "minha-msg" : "msg";
+        if(sala==="privada"){
+
+
+            chat.style.display="none";
+
+            senhaSala.style.display="flex";
+
+
+            return;
+
+
+        }
 
 
 
-        mensagens.innerHTML += `
-
-
-        <div class="${classe}">
-
-            <b>${msg.usuario}</b>
-
-            <br>
-
-            ${msg.texto}
-
-        </div>
-
-
-        `;
+        abrirSala(sala);
 
 
 
     });
 
 
-});
-
-
-
-
-
-
-
-// SALA PRIVADA
-
-
-const salaPrivada = document.getElementById("salaPrivada");
-console.log("Botão sala privada:", salaPrivada);
-
-
-const senhaSala = document.getElementById("senhaSala");
-
-const senhaInput = document.getElementById("senha");
-
-const entrarSala = document.getElementById("entrarSala");
-
-const erroSenha = document.getElementById("erroSenha");
-
-
-
-
-salaPrivada.addEventListener("click",()=>{
-console.log("Clicou na sala privada");
-
-    chat.style.display="none";
-
-    senhaSala.style.display="block";
-
 
 });
 
@@ -199,30 +369,38 @@ console.log("Clicou na sala privada");
 
 
 
-entrarSala.addEventListener("click", async()=>{
 
-    console.log("Clicou para entrar na sala privada");
-    
+// ===============================
+// ENTRAR SALA PRIVADA
+// ===============================
+
+
+entrarSala.addEventListener("click",async()=>{
+
+
 
     const sala = await getDoc(
 
-        doc(db,"salas","privada")
-        
+        doc(
+            db,
+            "salas",
+            "privada"
+        )
 
     );
-
-    console.log("Sala encontrada:", sala.exists());
 
 
 
     if(sala.exists()){
 
 
-        let senhaCorreta = sala.data().senha;
+        const senhaCorreta =
+        sala.data().senha;
 
 
 
         if(senhaInput.value === senhaCorreta){
+
 
 
             senhaSala.style.display="none";
@@ -230,19 +408,25 @@ entrarSala.addEventListener("click", async()=>{
             chat.style.display="flex";
 
 
-            alert("Entrou na sala privada");
+
+            abrirSala("privada");
 
 
-        }else{
+
+        }
+
+        else{
 
 
-            erroSenha.innerHTML="Senha incorreta";
+            erroSenha.innerHTML =
+            "Senha incorreta";
 
 
         }
 
 
     }
+
 
 
 });
