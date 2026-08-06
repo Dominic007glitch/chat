@@ -26,6 +26,8 @@ console.log("Botão entrar:", entrar);
 
 let nome = localStorage.getItem("nome");
 
+let salaAtual = "geral";
+
 
 
 if(nome){
@@ -85,7 +87,9 @@ botao.addEventListener("click", async()=>{
 
 
 
-    await addDoc(collection(db,"mensagens"),{
+    await addDoc(collection(db,"mensagens"),await addDoc(
+    collection(db, "salas", salaAtual, "mensagens"),
+{
 
 
         texto: input.value,
@@ -113,7 +117,7 @@ botao.addEventListener("click", async()=>{
 
 const q = query(
 
-    collection(db,"mensagens"),
+    collection(db, "salas", salaAtual, "mensagens"),
 
     orderBy("data")
 
