@@ -12,8 +12,7 @@ import {
     query,
     serverTimestamp,
     doc,
-    getDoc,
-    setDoc
+    getDoc
 } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -22,7 +21,6 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 // ===============================
 // VARIÁVEIS
 // ===============================
-
 
 let nome = localStorage.getItem("nome");
 
@@ -35,25 +33,21 @@ let pararMensagens = null;
 
 
 // ===============================
-// ELEMENTOS HTML
+// ELEMENTOS
 // ===============================
-
 
 const login = document.getElementById("login");
 
 const chat = document.getElementById("chat");
 
-
 const nomeInput = document.getElementById("nome");
 
 const entrar = document.getElementById("entrar");
-
 
 const usuario = document.getElementById("usuario");
 
 
 const mensagens = document.getElementById("mensagens");
-
 
 const input = document.getElementById("mensagem");
 
@@ -63,8 +57,7 @@ const enviar = document.getElementById("enviar");
 const tituloSala = document.getElementById("tituloSala");
 
 
-
-// sala privada
+// Sala privada
 
 const senhaSala = document.getElementById("senhaSala");
 
@@ -75,8 +68,7 @@ const entrarSala = document.getElementById("entrarSala");
 const erroSenha = document.getElementById("erroSenha");
 
 
-
-// salas
+// Salas
 
 const botoesSala = document.querySelectorAll(".sala");
 
@@ -96,9 +88,12 @@ if(nome){
 
     usuario.innerHTML = nome;
 
+    verificarAdmin();
+
     abrirSala("geral");
 
 }
+
 
 
 
@@ -116,10 +111,12 @@ entrar.addEventListener("click",()=>{
 
 
     nome = nomeInput.value.trim();
+
+
+    localStorage.setItem("nome", nome);
+
+
     verificarAdmin();
-
-
-    localStorage.setItem("nome",nome);
 
 
 
@@ -135,6 +132,8 @@ entrar.addEventListener("click",()=>{
 
 
 });
+
+
 
 
 
@@ -160,11 +159,12 @@ function abrirSala(sala){
     }
 
 
-
     carregarMensagens();
 
 
 }
+
+
 
 
 
@@ -176,7 +176,6 @@ function abrirSala(sala){
 
 
 function carregarMensagens(){
-
 
 
     mensagens.innerHTML="";
@@ -206,7 +205,6 @@ function carregarMensagens(){
 
 
 
-
     pararMensagens = onSnapshot(q,(snapshot)=>{
 
 
@@ -220,9 +218,7 @@ function carregarMensagens(){
             const msg = documento.data();
 
 
-
             const div = document.createElement("div");
-
 
 
             div.className =
@@ -234,14 +230,13 @@ function carregarMensagens(){
 
             div.innerHTML = `
 
-                <b>${msg.usuario}</b>
+            <b>${msg.usuario}</b>
 
-                <br>
+            <br>
 
-                ${msg.texto}
+            ${msg.texto}
 
             `;
-
 
 
             mensagens.appendChild(div);
@@ -262,6 +257,7 @@ function carregarMensagens(){
 
 
 }
+
 
 
 
@@ -329,6 +325,8 @@ input.addEventListener("keypress",(e)=>{
 
 
 
+
+
 // ===============================
 // TROCAR SALAS
 // ===============================
@@ -337,7 +335,7 @@ input.addEventListener("keypress",(e)=>{
 botoesSala.forEach(botao=>{
 
 
-    botao.addEventListener("click",async()=>{
+    botao.addEventListener("click",()=>{
 
 
         const sala = botao.dataset.sala;
@@ -353,7 +351,6 @@ botoesSala.forEach(botao=>{
 
 
             return;
-
 
         }
 
@@ -374,13 +371,13 @@ botoesSala.forEach(botao=>{
 
 
 
+
 // ===============================
 // ENTRAR SALA PRIVADA
 // ===============================
 
 
 entrarSala.addEventListener("click",async()=>{
-
 
 
     const sala = await getDoc(
@@ -398,13 +395,11 @@ entrarSala.addEventListener("click",async()=>{
     if(sala.exists()){
 
 
-        const senhaCorreta =
-        sala.data().senha;
+        const senhaCorreta = sala.data().senha;
 
 
 
         if(senhaInput.value === senhaCorreta){
-
 
 
             senhaSala.style.display="none";
@@ -412,9 +407,7 @@ entrarSala.addEventListener("click",async()=>{
             chat.style.display="flex";
 
 
-
             abrirSala("privada");
-
 
 
         }
@@ -425,20 +418,43 @@ entrarSala.addEventListener("click",async()=>{
             erroSenha.innerHTML =
             "Senha incorreta";
 
-            }
+
+        }
+
+
+    }
+
 
 });
 
+
+
+
+
+
+
+// ===============================
+// VERIFICAR ADMIN
+// ===============================
+
+
 async function verificarAdmin(){
 
+
     const usuarioRef = doc(
+
         db,
+
         "usuarios",
+
         nome.toLowerCase()
+
     );
 
 
+
     const usuarioDoc = await getDoc(usuarioRef);
+
 
 
     if(usuarioDoc.exists()){
@@ -447,14 +463,20 @@ async function verificarAdmin(){
         const dados = usuarioDoc.data();
 
 
+
         if(dados.admin === true){
+
 
             ehAdmin = true;
 
+
             console.log("Administrador reconhecido");
+
 
         }
 
+
     }
+
 
 }
