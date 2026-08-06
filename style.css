@@ -1,49 +1,174 @@
-*{
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
-body{
+body {
 
-    margin:0;
-    height:100vh;
+    background: #111827;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
 
-    background:#0b0b0d;
+}
 
-    font-family:Arial, Helvetica, sans-serif;
 
-    color:#e8e8e8;
+
+/* LOGIN */
+
+.login {
+
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1f2937
+    );
+
+}
+
+
+
+.login-box {
+
+    background: #1f2937;
+
+    width: 350px;
+
+    padding: 35px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.5);
+
+}
+
+
+
+.login-box h1,
+.login-box h2 {
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.login-box p {
+
+    color: #9ca3af;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+
+input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    border: none;
+
+    outline: none;
+
+    background: #374151;
+
+    color:white;
+
+    margin-bottom: 12px;
+
+    font-size: 15px;
+
+}
+
+
+
+button {
+
+    cursor:pointer;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:12px 18px;
+
+    background:#5865f2;
+
+    color:white;
+
+    font-size:15px;
+
+    transition:.2s;
+
+}
+
+
+
+button:hover {
+
+    background:#4752c4;
+
+    transform:scale(1.03);
+
+}
+
+
+
+
+
+/* APLICATIVO */
+
+
+.app {
 
     display:flex;
 
-    align-items:center;
-
-    justify-content:center;
+    height:100vh;
 
 }
 
 
 
-/* TELA DE LOGIN */
+/* SIDEBAR */
 
-.login{
 
-    background:#151517;
+.sidebar {
 
-    padding:40px;
+    width:260px;
 
-    width:350px;
+    background:#111827;
 
-    border-radius:18px;
+    border-right:1px solid #374151;
 
-    text-align:center;
+    padding:20px;
 
-    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    display:flex;
+
+    flex-direction:column;
 
 }
 
 
-.login h2{
+
+.sidebar h2 {
 
     margin-bottom:25px;
 
@@ -51,137 +176,57 @@ body{
 
 
 
-input{
-
-    background:#202023;
-
-    border:1px solid #333;
-
-    color:white;
-
-    padding:14px;
-
-    border-radius:10px;
-
-    outline:none;
-
-}
-
-
-.login input{
-
-    width:100%;
-
-    margin-bottom:15px;
-
-}
-
-
-
-
-button{
-
-    background:#ffffff;
-
-    color:#111;
-
-    border:none;
-
-    padding:12px 20px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-    transition:.2s;
-
-}
-
-
-
-button:hover{
-
-    opacity:.8;
-
-}
-
-
-
-
-
-/* APLICAÇÃO */
-
-
-.app{
-
-    width:950px;
-
-    height:650px;
+.lista-salas {
 
     display:flex;
 
-    background:#111113;
+    flex-direction:column;
 
-    border-radius:20px;
-
-    overflow:hidden;
-
-    box-shadow:0 25px 70px rgba(0,0,0,.6);
+    gap:10px;
 
 }
 
 
 
-/* BARRA LATERAL */
+.sala {
 
+    width:100%;
 
-.sidebar{
+    text-align:left;
 
-    width:240px;
-
-    background:#151517;
-
-    padding:25px;
-
-    border-right:1px solid #242426;
+    background:#1f2937;
 
 }
 
 
 
-.sidebar h2{
+.sala:hover {
 
-    margin-top:0;
-
-    color:white;
+    background:#374151;
 
 }
 
 
 
-.usuario{
+.sala.ativa {
 
-    padding:12px;
-
-    margin-top:10px;
-
-    background:#202023;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    transition:.2s;
+    background:#5865f2;
 
 }
 
 
 
-.usuario:hover{
+.sidebar-footer {
 
-    background:#2a2a2e;
+    margin-top:auto;
+
+}
+
+
+
+#criarSala {
+
+    width:100%;
 
 }
 
@@ -192,7 +237,7 @@ button:hover{
 /* CHAT */
 
 
-.chat{
+.chat {
 
     flex:1;
 
@@ -200,64 +245,66 @@ button:hover{
 
     flex-direction:column;
 
+    background:#0f172a;
+
 }
 
 
 
-header{
+.topo-chat {
 
     height:70px;
 
-    padding:20px 25px;
+    padding:20px;
 
-    background:#151517;
+    background:#111827;
 
-    border-bottom:1px solid #242426;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
+    border-bottom:1px solid #374151;
 
 }
 
 
 
-header h2{
+.topo-chat h2 {
 
-    margin:0;
+    font-size:20px;
 
 }
 
 
 
 
-#mensagens{
+#mensagens {
 
     flex:1;
 
-    padding:25px;
+    padding:20px;
 
     overflow-y:auto;
 
-    background:#0f0f11;
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
 
 }
 
 
 
 
+
+/* MENSAGENS */
+
+
 .msg,
-.minha-msg{
+.minha-msg {
 
-    max-width:65%;
+    max-width:60%;
 
-    padding:12px 16px;
+    padding:12px;
 
-    border-radius:14px;
-
-    margin-bottom:15px;
+    border-radius:12px;
 
     line-height:1.4;
 
@@ -265,25 +312,35 @@ header h2{
 
 
 
-.msg{
+.msg {
 
-    background:#202023;
+    background:#1f2937;
 
-    color:#ddd;
+    align-self:flex-start;
+
+}
+
+
+
+.minha-msg {
+
+    background:#5865f2;
+
+    align-self:flex-end;
 
 }
 
 
 
-.minha-msg{
 
-    background:#ffffff;
 
-    color:#111;
+.msg b,
+.minha-msg b {
 
-    margin-left:auto;
+    font-size:13px;
 
 }
+
 
 
 
@@ -291,29 +348,29 @@ header h2{
 /* ENVIO */
 
 
-.envio{
+.envio {
 
     display:flex;
 
     gap:10px;
 
-    padding:20px;
+    padding:15px;
 
-    background:#151517;
-
-}
-
-
-
-.envio input{
-
-    flex:1;
+    background:#111827;
 
 }
 
 
 
-.envio button{
+.envio input {
+
+    margin:0;
+
+}
+
+
+
+.envio button {
 
     width:100px;
 
@@ -322,49 +379,76 @@ header h2{
 
 
 
+
+/* ERRO */
+
+#erroSenha {
+
+    color:#ef4444;
+
+    margin-top:10px;
+
+}
+
+
+
+
+
 /* SCROLL */
 
-#mensagens::-webkit-scrollbar{
+
+#mensagens::-webkit-scrollbar {
 
     width:8px;
 
 }
 
 
-#mensagens::-webkit-scrollbar-thumb{
+#mensagens::-webkit-scrollbar-thumb {
 
-    background:#333;
+    background:#374151;
 
     border-radius:10px;
 
 }
 
-#salaPrivada{
-
-width:100%;
-
-margin-top:20px;
-
-background:#202023;
-
-color:white;
-
-border:1px solid #333;
-
-}
 
 
-#salaPrivada:hover{
 
-background:#2b2b30;
+
+/* CELULAR */
+
+
+@media(max-width:700px){
+
+
+.sidebar{
+
+    width:80px;
 
 }
 
 
-#erroSenha{
+.sidebar h2{
 
-color:#ff5555;
+    display:none;
 
-margin-top:10px; 
+}
+
+
+.sala{
+
+    font-size:0;
+
+}
+
+
+.sala::first-letter{
+
+    font-size:20px;
+
+}
+
+
 
 }
