@@ -425,7 +425,11 @@ entrarSala.addEventListener("click",async()=>{
             erroSenha.innerHTML =
             "Senha incorreta";
 
-            async function verificarAdmin(){
+            }
+
+});
+
+async function verificarAdmin(){
 
     const usuarioRef = doc(
         db,
@@ -449,10 +453,8 @@ entrarSala.addEventListener("click",async()=>{
 
             console.log("Administrador reconhecido");
 
-
         }
 
     }
 
 }
-
